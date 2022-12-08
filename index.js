@@ -11,6 +11,7 @@ const tmi = require('tmi.js');
 const http = require('http')
 
 const commands = new Map();
+const events = new Map();
 const cooldowns = new Map();
 
 // Add new method "Reload commands"
@@ -26,6 +27,22 @@ tmi.Client.prototype.reloadCommands = function reloadCommands() {
       const command = require(`./commands/${folder}/${file}`)
       commands.set(commandName, command);
     }
+  }
+  // Clear file cache
+  Object.keys(require.cache).forEach(function (key) {
+    delete require.cache[key]
+  });
+}
+
+// Add new method "Reload events"
+tmi.Client.prototype.reloadEvents = function reloadEvents() {
+  events.clear();
+  const eventFiles = fs.readdirSync(`./events`).filter(file => file.endsWith('.js'));
+  for (const file of eventFiles) {
+    delete require.cache[file]
+    const eventName = file.split('.js')[0];
+    const event = require(`./events/${file}`)
+    events.set(eventName, event);
   }
   // Clear file cache
   Object.keys(require.cache).forEach(function (key) {
@@ -134,17 +151,8 @@ client.on('message', (channel, tags, message, self) => {
   }, command.cooldown * 1000);
 });
 
-// SUB ALERTS
-// Sub
-// Resub
-// GiftSub
-// AnonGiftSub
-// GiftUpgrade
-// AnonGiftSub
-
-// RAID ALERTS
-
-// Follows alerts
+// EVENTSUB
+client.reloadEvents();
 const server = http.createServer((request, response) => {
   let chunks = [];
   request.on("data", (chunk) => {
@@ -155,8 +163,14 @@ const server = http.createServer((request, response) => {
     const querystring = data.toString();
     const parsedData = new URLSearchParams(querystring);
     const dataObj = JSON.parse(parsedData.keys().next().value)
-    console.log(dataObj);
-    client.action(channelNames[0], `${dataObj.twitchEvent.user_name} vient de follow la chaine !`)
+    const eventType = dataObj.event.slice(8)
+    const eventDetails = dataObj.twitchEvent
+    const event = events.get(eventType);
+    try {
+      event.execute(client, 'amesul', eventDetails)
+    } catch (e) {
+      console.log(e);
+    }
     response.end();
   });
 });
