@@ -19,7 +19,7 @@ module.exports = {
           moderatorsOnly: false,
           cooldown: 30,
           execute(client, channel, tags, args, commands, database) {
-            client.action(channel,  \`: ${newCommandText}   |   🚫 30s\`)
+            client.action(channel,  \`: ${newCommandText}\`)
             }
           }`;
 
