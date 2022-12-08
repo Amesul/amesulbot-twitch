@@ -17,8 +17,8 @@ module.exports = {
           'Authorization': bearer,
           'Client-Id': clientId
         }
-      }) || 'Le titre n\'a pas pu être récupéré';
-      const currentTitle = JSON.stringify(res.data.data[0].title);
+      })
+      const currentTitle = JSON.stringify(res.data.data[0].title) || 'Le titre n\'a pas pu être récupéré';
       if (!newTitle) return client.action(channel, `: ${currentTitle}`)
 
       if (newTitle && !tags.mod && !tags.username == 'amesul') return client.action(channel, `: Tu n'as pas l'autorisation de modifier le titre ${tags['display-name']} !'`)
