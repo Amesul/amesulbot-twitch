@@ -1,2 +1,2 @@
 # amesulbot-twitch
-Twitch chatbot and other tools for Amesul's channel
+Un chat bot pour la chaîne d'[Amesul](https://twitch.tv/amesul)
