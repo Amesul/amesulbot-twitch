@@ -1,0 +1,16 @@
+{
+  "name": "twitch-bot",
+  "version": "3.0.0",
+  "dependencies": {
+    "axios": "^1.2.0",
+    "mongodb": "^4.11.0",
+    "tmi.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "test": "nodemon index.js",
+    "start": "node index.js"
+  }
+}
