@@ -154,6 +154,9 @@ client.on('message', (channel, tags, message, self) => {
 // EVENTSUB
 client.reloadEvents();
 const server = http.createServer((request, response) => {
+  const token = (request.headers.authorization) === 'Bearer gfQqnqLSUgPGH0SJRx532lXmAmj96E';
+  if (!token) return;
+  const dataType = (request.headers['data-type'])
   let chunks = [];
   request.on("data", (chunk) => {
     chunks.push(chunk);
@@ -163,13 +166,22 @@ const server = http.createServer((request, response) => {
     const querystring = data.toString();
     const parsedData = new URLSearchParams(querystring);
     const dataObj = JSON.parse(parsedData.keys().next().value)
-    const eventType = dataObj.event.slice(8)
-    const eventDetails = dataObj.twitchEvent
-    const event = events.get(eventType);
-    try {
-      event.execute(client, 'amesul', eventDetails)
-    } catch (e) {
-      console.log(e);
+    if (dataType === 'twitch-event') {
+      const eventType = dataObj.event.slice(8);
+      const eventDetails = dataObj.twitchEvent
+      const event = events.get(eventType);
+      if (event == undefined) return;
+      try {
+        event.execute(client, 'amesul', eventDetails)
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    if (dataType === 'ngrok-url') {
+      const data = {
+        "ngrokTunnelUrl": dataObj.url
+      };
+      fs.writeFileSync('./events/url.json', JSON.stringify(data))
     }
     response.end();
   });

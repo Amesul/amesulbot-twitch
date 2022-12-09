@@ -1,3 +1,6 @@
+const {
+    overlaysToken
+} = require('../../../config.json')
 exports.handler = async (event) => {
     const axios = require('axios').default;
     const {
@@ -25,13 +28,17 @@ exports.handler = async (event) => {
     };
 
     if (type === 'notification') {
-        await axios.post('https://f36c-79-88-242-127.eu.ngrok.io', {
-                event: eventType,
-                twitchEvent
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        await axios.post('https://ed46-79-88-242-127.eu.ngrok.io', {
+            event: eventType,
+            twitchEvent
+        }, {
+            headers: {
+                'data-type': 'twitch-event',
+                'Authorization': overlaysToken
+            }
+        }).catch(function (error) {
+            console.log(error);
+        });
     }
 
     return {

@@ -1,0 +1,18 @@
+{
+  "name": "eventsub-overlays",
+  "version": "0.1.0",
+  "description": "Desktop app for AmesulBot, a chatbot for Amesul's Twitch channel",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "amesul",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^22.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ngrok": "^4.3.3"
+  }
+}

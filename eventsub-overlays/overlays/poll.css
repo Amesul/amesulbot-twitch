@@ -1,0 +1,45 @@
+main {
+    padding: 10px;
+    width: 500px;
+    height: 100%;
+    background-color: #1b014c;
+    border-radius: 25px;
+}
+
+h1 {
+    color: rgb(243, 237, 230);
+    margin: 0;
+    padding: 10px;
+    font-size: 1.5em;
+}
+
+ul {
+    width: 500px;
+    padding: 0 25px 0 25px;
+    list-style-type: none;
+}
+
+li {
+    position: relative;
+    width: 450px;
+    height: 100%;
+    padding: 0;
+    margin-top: 10px;
+}
+
+p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0 10px 0 10px;
+    overflow: hidden;
+    color: rgb(243, 237, 230);
+}
+
+div {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    z-index: 0;
+    height: 40px;
+    background-color: #6441a5;
+}
