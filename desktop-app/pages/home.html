@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <title>AmesulBot - App</title>
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <main>
+        <section id="twitch-config">
+            <form name="stream-info">
+                <div>
+                    <label for="stream-title-in">Titre du stream</label>
+                    <input type="text" name="stream-title-in" id="stream-title-in">
+                </div>
+                <div>
+                    <label for="stream-categorie-in">Catégorie du stream</label>
+                    <input type="text" name="stream-categorie-in" id="stream-categorie-in">
+                </div>
+                <input type="button" value="Modifier les informations">
+            </form>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+<script src="./renderer.js"></script>
+
+</html>

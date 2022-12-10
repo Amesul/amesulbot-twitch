@@ -1,10 +1,14 @@
 const {
-    overlaysToken
-} = require('../config.json')
+    appToken
+} = require('./config.json')
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    Menu
 } = require('electron');
+const {
+    mainMenu
+} = require('./menumaker.js')
 const axios = require('axios')
 const http = require('http');
 
@@ -13,7 +17,8 @@ const createWindow = () => {
         width: 800,
         height: 600,
     })
-    win.loadFile('main.html')
+    win.loadFile('./pages/home.html')
+    Menu.setApplicationMenu(mainMenu);
 };
 
 app.whenReady().then(() => {
@@ -24,17 +29,20 @@ const ngrok = require('ngrok');
 (async function () {
     const url = await ngrok.connect(3000);
     console.log(url);
-    await axios.post('https://ed46-79-88-242-127.eu.ngrok.io', {
-        url: url
-    }, {
+    await axios({
+        method: 'post',
+        url: 'https://385b-90-13-125-19.eu.ngrok.io',
         headers: {
             'data-type': 'ngrok-url',
-            'Authorization': overlaysToken
+            'Authorization': appToken
+        },
+        data: {
+            url: url
         }
     }).catch(function (error) {
         console.log(error);
     });
-})();
+}) //();
 
 
 const server = http.createServer((request, response) => {
