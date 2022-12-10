@@ -1,6 +1,7 @@
 const {
   channelNames,
   token,
+  appToken,
   mongoUrl
 } = require("./config.json");
 const {
@@ -154,8 +155,8 @@ client.on('message', (channel, tags, message, self) => {
 // EVENTSUB
 client.reloadEvents();
 const server = http.createServer((request, response) => {
-  const token = (request.headers.authorization) === 'Bearer gfQqnqLSUgPGH0SJRx532lXmAmj96E';
-  if (!token) return;
+  const tokenVerif = (request.headers.authorization) === appToken;
+  if (!tokenVerif) return;
   const dataType = (request.headers['data-type'])
   let chunks = [];
   request.on("data", (chunk) => {
